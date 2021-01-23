@@ -2502,9 +2502,9 @@ void MarlinSettings::reset() {
     #if HAS_PROBE_XY_OFFSET
     {
       LOOP_XYZ(a) probe.offset[a] = dpo[a];
-      TERN_(NOZZLE_TO_PROBE_OFFSET_X,  probe.offset.x);
-      TERN_(NOZZLE_TO_PROBE_OFFSET_Y,  probe.offset.y);
-      TERN_(NOZZLE_TO_PROBE_OFFSET_Z,  probe.offset.z);
+      TERN_(float(NOZZLE_TO_PROBE_OFFSET_X),  probe.offset.x);
+      TERN_(float(NOZZLE_TO_PROBE_OFFSET_Y),  probe.offset.y);
+      TERN_(float(NOZZLE_TO_PROBE_OFFSET_Z),  probe.offset.z);
     }  
     #else
     {

@@ -2413,7 +2413,7 @@
 
   // These may be overridden in Configuration.h if a smaller area is desired
   #ifndef MESH_MIN_X
-      #define MESH_MIN_X + _MESH_MIN_X
+      #define MESH_MIN_X _MESH_MIN_X
   #endif
   #ifndef MESH_MIN_Y
     #define MESH_MIN_Y _MESH_MIN_Y

@@ -2396,16 +2396,24 @@
     #define _MESH_MAX_X (X_MAX_BED - (MESH_INSET))
     #define _MESH_MAX_Y (Y_MAX_BED - (MESH_INSET))
   #else
-    // Boundaries for Cartesian probing based on set limits
-    #define _MESH_MIN_X (_MAX(X_MIN_BED + MESH_INSET, X_MIN_POS))  // UBL is careful not to probe off the bed.  It does not
-    #define _MESH_MIN_Y (_MAX(Y_MIN_BED + MESH_INSET, Y_MIN_POS))  // need NOZZLE_TO_PROBE_OFFSET in the mesh dimensions
-    #define _MESH_MAX_X (_MIN(X_MAX_BED - (MESH_INSET), X_MAX_POS))
-    #define _MESH_MAX_Y (_MIN(Y_MAX_BED - (MESH_INSET), Y_MAX_POS))
+    #ifdef AUTO_BED_LEVELING_UBL
+      // Boundaries for Cartesian probing based on set limits
+      // use NOZZLE_TO_PROBE_OFFSET_X, NOZZLE_TO_PROBE_OFFSET_Y
+      #define _MESH_MIN_X (_MAX(X_MIN_BED + ABS(NOZZLE_TO_PROBE_OFFSET_X), X_MIN_POS))  // UBL is careful not to probe off the bed.  It does not
+      #define _MESH_MIN_Y (_MAX(Y_MIN_BED + ABS(NOZZLE_TO_PROBE_OFFSET_Y), Y_MIN_POS))  // need NOZZLE_TO_PROBE_OFFSET in the mesh dimensions
+      #define _MESH_MAX_X (_MIN(X_MAX_BED - ABS(NOZZLE_TO_PROBE_OFFSET_X), X_MAX_POS))
+      #define _MESH_MAX_Y (_MIN(Y_MAX_BED - ABS(NOZZLE_TO_PROBE_OFFSET_Y), Y_MAX_POS))
+    #else
+      #define _MESH_MIN_X (_MAX(X_MIN_BED + (MESH_INSET), X_MIN_POS)) 
+      #define _MESH_MIN_Y (_MAX(Y_MIN_BED + (MESH_INSET), Y_MIN_POS))  
+      #define _MESH_MAX_X (_MIN(X_MAX_BED - (MESH_INSET), X_MAX_POS))
+      #define _MESH_MAX_Y (_MIN(Y_MAX_BED - (MESH_INSET), Y_MAX_POS))
+    #endif
   #endif
 
   // These may be overridden in Configuration.h if a smaller area is desired
   #ifndef MESH_MIN_X
-    #define MESH_MIN_X _MESH_MIN_X
+      #define MESH_MIN_X + _MESH_MIN_X
   #endif
   #ifndef MESH_MIN_Y
     #define MESH_MIN_Y _MESH_MIN_Y

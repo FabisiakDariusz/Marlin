@@ -978,7 +978,7 @@
  */
 //#define SENSORLESS_PROBING
 
-#define NOZZLE_TO_PROBE_OFFSET_X  30.0
+#define NOZZLE_TO_PROBE_OFFSET_X  26.0
 #define NOZZLE_TO_PROBE_OFFSET_Y -40.0
 #define NOZZLE_TO_PROBE_OFFSET_Z  -3.4
 
@@ -1352,7 +1352,7 @@
 
   //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-  #define MESH_INSET 10              // Set Mesh bounds as an inset region of the bed
+  #define MESH_INSET 1              // Set Mesh bounds as an inset region of the bed
 
   
                                    

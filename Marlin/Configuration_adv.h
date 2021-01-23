@@ -1718,12 +1718,17 @@
  * should the probe position be modified with M851XY then the
  * probe points will follow. This prevents any change from causing
  * the probe to be unable to reach any points.
+
+ * dev "Dariusz Fabisiak": 
+ * If use NOZZLE_TO_PROBE_OFFSET then PROBING_MARGIN_... [LEFT, FRONT,...] have bug/problem with
+ * corect calculate BED_SIZE to AUTO_BED_LEVELING_UBL
  */
+
 #if PROBE_SELECTED && !IS_KINEMATIC
   //#define PROBING_MARGIN_LEFT PROBING_MARGIN
   //#define PROBING_MARGIN_RIGHT PROBING_MARGIN
   //#define PROBING_MARGIN_FRONT PROBING_MARGIN
-  #define PROBING_MARGIN_BACK 60
+  //#define PROBING_MARGIN_BACK 60
 #endif
 
 #if EITHER(MESH_BED_LEVELING, AUTO_BED_LEVELING_UBL)

@@ -1012,15 +1012,15 @@
  *     |    [-]    |
  *     O-- FRONT --+
  */
-#define NOZZLE_TO_PROBE_OFFSET_X 
-#define NOZZLE_TO_PROBE_OFFSET_Y 
-#define NOZZLE_TO_PROBE_OFFSET_Z 
+#define NOZZLE_TO_PROBE_OFFSET_X  26.0
+#define NOZZLE_TO_PROBE_OFFSET_Y -40.0
+#define NOZZLE_TO_PROBE_OFFSET_Z  -3.4
 
-#define NOZZLE_TO_PROBE_OFFSET { 27, -40, -4.5 }
+#define NOZZLE_TO_PROBE_OFFSET { NOZZLE_TO_PROBE_OFFSET_X, NOZZLE_TO_PROBE_OFFSET_Y, NOZZLE_TO_PROBE_OFFSET_Z }
 
 // Most probes should stay away from the edges of the bed, but
 // with NOZZLE_AS_PROBE this can be negative for a wider probing area.
-#define PROBING_MARGIN 10
+//#define PROBING_MARGIN 0
 
 // X and Y axis travel speed (mm/min) between probes
 #define XY_PROBE_SPEED (133*60)
@@ -1272,7 +1272,7 @@
 //#define AUTO_BED_LEVELING_LINEAR
 //#define AUTO_BED_LEVELING_BILINEAR
 #define AUTO_BED_LEVELING_UBL
-//#define MESH_BED_LEVELING
+#define MESH_BED_LEVELING
 
 /**
  * Normally G28 leaves leveling disabled on completion. Enable
@@ -1349,9 +1349,11 @@
 
   //#define MESH_EDIT_GFX_OVERLAY   // Display a graphics overlay while editing the mesh
 
-  #define MESH_INSET 35              // Set Mesh bounds as an inset region of the bed, for UBL use 
+  #define MESH_INSET 0              // Set Mesh bounds as an inset region of the bed
+
+  
                                    
-  #define GRID_MAX_POINTS_X 5     // Don't use more than 15 points per axis, implementation limited.
+  #define GRID_MAX_POINTS_X 7       // Don't use more than 15 points per axis, implementation limited.
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   #define UBL_MESH_EDIT_MOVES_Z     // Sophisticated users prefer no movement of nozzle

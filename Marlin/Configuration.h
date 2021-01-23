@@ -72,7 +72,7 @@
 // @section info
 
 // Author info of this build printed to the host during boot and M115
-#define STRING_CONFIG_H_AUTHOR "(thisiskeithb, BIQU B1 BLTouch)" // Who made the changes.
+#define STRING_CONFIG_H_AUTHOR "(luznybaleron, BIQU B1 UBL BLTouch)" // Who made the changes.
 //#define CUSTOM_VERSION_FILE Version.h // Path from the root directory (no quotes)
 
 /**
@@ -134,7 +134,7 @@
 #endif
 
 // Name displayed in the LCD "Ready" message and Info menu
-#define CUSTOM_MACHINE_NAME "BIQU B1"
+#define CUSTOM_MACHINE_NAME "BIQU B1 by luznybaleron"
 
 // Printer's unique ID, used by some programs to differentiate between machines.
 // Choose your own or use a service like https://www.uuidgenerator.net/version4
@@ -1361,6 +1361,8 @@
 
   //#define UBL_Z_RAISE_WHEN_OFF_MESH 2.5 // When the nozzle is off the mesh, this value is used
                                           // as the Z-Height correction value.
+
+  #define USE_PROBE_FOR_Z_HOMING
 
 #elif ENABLED(MESH_BED_LEVELING)
 

@@ -2347,18 +2347,18 @@
   #define PROBING_MARGIN_FRONT 0
   #define PROBING_MARGIN_BACK 0
 #else
-  #ifndef PROBING_MARGIN_LEFT
-    #define PROBING_MARGIN_LEFT PROBING_MARGIN
-  #endif
-  #ifndef PROBING_MARGIN_RIGHT
-    #define PROBING_MARGIN_RIGHT PROBING_MARGIN
-  #endif
-  #ifndef PROBING_MARGIN_FRONT
-    #define PROBING_MARGIN_FRONT PROBING_MARGIN
-  #endif
-  #ifndef PROBING_MARGIN_BACK
-    #define PROBING_MARGIN_BACK PROBING_MARGIN
-  #endif
+    #ifndef PROBING_MARGIN_LEFT
+      #define PROBING_MARGIN_LEFT PROBING_MARGIN
+    #endif
+    #ifndef PROBING_MARGIN_RIGHT
+      #define PROBING_MARGIN_RIGHT PROBING_MARGIN
+    #endif
+    #ifndef PROBING_MARGIN_FRONT
+      #define PROBING_MARGIN_FRONT PROBING_MARGIN
+    #endif
+    #ifndef PROBING_MARGIN_BACK 
+      #define PROBING_MARGIN_BACK PROBING_MARGIN
+    #endif
 #endif
 
 #if ENABLED(DELTA)
@@ -2399,10 +2399,10 @@
     #ifdef AUTO_BED_LEVELING_UBL
       // Boundaries for Cartesian probing based on set limits
       // use NOZZLE_TO_PROBE_OFFSET_X, NOZZLE_TO_PROBE_OFFSET_Y
-      #define _MESH_MIN_X (_MAX(X_MIN_BED + (ABS(NOZZLE_TO_PROBE_OFFSET_X), X_MIN_POS))  // UBL is careful not to probe off the bed.  It does not
-      #define _MESH_MIN_Y (_MAX(Y_MIN_BED + (ABS(NOZZLE_TO_PROBE_OFFSET_Y), Y_MIN_POS))  // need NOZZLE_TO_PROBE_OFFSET in the mesh dimensions
-      #define _MESH_MAX_X (_MIN(X_MAX_BED - (ABS(NOZZLE_TO_PROBE_OFFSET_X), X_MAX_POS))
-      #define _MESH_MAX_Y (_MIN(Y_MAX_BED - (ABS(NOZZLE_TO_PROBE_OFFSET_Y), Y_MAX_POS))
+      #define _MESH_MIN_X (_MAX(X_MIN_BED + ABS(NOZZLE_TO_PROBE_OFFSET_X), X_MIN_POS)  // UBL is careful not to probe off the bed.  It does not
+      #define _MESH_MIN_Y (_MAX(Y_MIN_BED + ABS(NOZZLE_TO_PROBE_OFFSET_Y), Y_MIN_POS)  // need NOZZLE_TO_PROBE_OFFSET in the mesh dimensions
+      #define _MESH_MAX_X (_MIN(X_MAX_BED - ABS(NOZZLE_TO_PROBE_OFFSET_X) X_MAX_POS)
+      #define _MESH_MAX_Y (_MIN(Y_MAX_BED - ABS(NOZZLE_TO_PROBE_OFFSET_Y), Y_MAX_POS)
     #else
       #define _MESH_MIN_X (_MAX(X_MIN_BED + (MESH_INSET), X_MIN_POS)) 
       #define _MESH_MIN_Y (_MAX(Y_MIN_BED + (MESH_INSET), Y_MIN_POS))  

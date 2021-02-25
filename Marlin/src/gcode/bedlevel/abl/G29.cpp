@@ -185,7 +185,6 @@ G29_TYPE GcodeSuite::G29() {
          no_action = seenA || seenQ,
               faux = ENABLED(DEBUG_LEVELING_FEATURE) && DISABLED(PROBE_MANUALLY) ? parser.boolval('C') : no_action;
 
-<<<<<<< HEAD
   // Don't allow auto-leveling without homing first
   if (axis_unhomed_error()) G29_RETURN(false);
 
@@ -199,8 +198,6 @@ G29_TYPE GcodeSuite::G29() {
     }
   #endif
 
-=======
->>>>>>> upstream/bugfix-2.0.x
   if (!no_action && planner.leveling_active && parser.boolval('O')) { // Auto-level only if needed
     if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPGM("> Auto-level not needed, skip");
     G29_RETURN(false);
@@ -685,18 +682,10 @@ G29_TYPE GcodeSuite::G29() {
 
           #elif ENABLED(AUTO_BED_LEVELING_BILINEAR)
 
-<<<<<<< HEAD
-            z_values[meshCount.x][meshCount.y] = measured_z + zoffset
-            #if ENABLED (BABYSTEP_DISPLAY_TOTAL)
-              + planner.steps_to_mm[Z_AXIS] * babystep.axis_total[BS_TOTAL_IND(Z_AXIS)];
-            #endif
-            ;
             TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(meshCount, z_values[meshCount.x][meshCount.y]));
-=======
             const float z = measured_z + zoffset;
             z_values[meshCount.x][meshCount.y] = z;
             TERN_(EXTENSIBLE_UI, ExtUI::onMeshUpdate(meshCount, z));
->>>>>>> upstream/bugfix-2.0.x
 
           #endif
 

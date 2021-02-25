@@ -326,25 +326,14 @@ void GcodeSuite::G28() {
 
     #endif
 
-<<<<<<< HEAD
-    const float z_homing_height =
-      ENABLED(UNKNOWN_Z_NO_RAISE) && !TEST(axis_known_position, Z_AXIS)
-        ? 0
-        : (parser.seenval('R') ? parser.value_linear_units() : Z_HOMING_HEIGHT);
-=======
     const float z_homing_height = TERN1(UNKNOWN_Z_NO_RAISE, axis_is_trusted(Z_AXIS))
                                   ? (parser.seenval('R') ? parser.value_linear_units() : Z_HOMING_HEIGHT)
                                   : 0;
->>>>>>> upstream/bugfix-2.0.x
 
     if (z_homing_height && (doX || doY || TERN0(Z_SAFE_HOMING, doZ))) {
       // Raise Z before homing any other axes and z is not already high enough (never lower z)
       if (DEBUGGING(LEVELING)) DEBUG_ECHOLNPAIR("Raise Z (before homing) by ", z_homing_height);
-<<<<<<< HEAD
-      do_z_clearance(z_homing_height, true, DISABLED(UNKNOWN_Z_NO_RAISE));
-=======
       do_z_clearance(z_homing_height, axis_is_trusted(Z_AXIS), DISABLED(UNKNOWN_Z_NO_RAISE));
->>>>>>> upstream/bugfix-2.0.x
     }
 
     #if ENABLED(QUICK_HOME)

@@ -15,8 +15,6 @@ try:
 except ImportError:
 	# PIO >= 4.4
 	from platformio.package.meta import PackageSpec as PackageManager
-<<<<<<< HEAD
-=======
 
 PIO_VERSION_MIN = (5, 0, 3)
 try:
@@ -41,7 +39,6 @@ except SystemExit:
 	exit(1)
 except:
 	print("Can't detect PlatformIO Version")
->>>>>>> upstream/bugfix-2.0.x
 
 Import("env")
 
@@ -66,18 +63,6 @@ def parse_pkg_uri(spec):
 FEATURE_CONFIG = {}
 
 def add_to_feat_cnf(feature, flines):
-<<<<<<< HEAD
-	feat = FEATURE_CONFIG[feature]
-	atoms = re.sub(',\\s*', '\n', flines).strip().split('\n')
-	for dep in atoms:
-		parts = dep.split('=')
-		name = parts.pop(0)
-		rest = '='.join(parts)
-		if name in ['extra_scripts', 'src_filter', 'lib_ignore']:
-			feat[name] = rest
-		else:
-			feat['lib_deps'] += [dep]
-=======
 
 	try:
 		feat = FEATURE_CONFIG[feature]
@@ -101,7 +86,6 @@ def add_to_feat_cnf(feature, flines):
 				lib_name = re.sub(r'@([~^]|[<>]=?)?[\d.]+', '', dep.strip()).split('=').pop(0)
 				lib_re = re.compile('(?!^' + lib_name + '\\b)')
 				feat['lib_deps'] = list(filter(lib_re.match, feat['lib_deps'])) + [dep]
->>>>>>> upstream/bugfix-2.0.x
 
 def load_config():
 	config = configparser.ConfigParser()
@@ -155,12 +139,7 @@ def force_ignore_unused_libs():
 	known_libs = get_all_known_libs()
 	diff = (list(set(known_libs) - set(env_libs)))
 	lib_ignore = env.GetProjectOption('lib_ignore') + diff
-<<<<<<< HEAD
-	if verbose:
-		print("Ignore libraries:", lib_ignore)
-=======
 	blab("Ignore libraries: %s" % lib_ignore)
->>>>>>> upstream/bugfix-2.0.x
 	set_env_field('lib_ignore', lib_ignore)
 
 def apply_features_config():
@@ -170,17 +149,10 @@ def apply_features_config():
 			continue
 
 		feat = FEATURE_CONFIG[feature]
-<<<<<<< HEAD
 
 		if 'lib_deps' in feat and len(feat['lib_deps']):
 			blab("Adding lib_deps for %s... " % feature)
 
-=======
-
-		if 'lib_deps' in feat and len(feat['lib_deps']):
-			blab("Adding lib_deps for %s... " % feature)
-
->>>>>>> upstream/bugfix-2.0.x
 			# feat to add
 			deps_to_add = {}
 			for dep in feat['lib_deps']:
@@ -206,15 +178,12 @@ def apply_features_config():
 				# Only add the missing dependencies
 				set_env_field('lib_deps', deps + list(deps_to_add.values()))
 
-<<<<<<< HEAD
-=======
 		if 'build_flags' in feat:
 			f = feat['build_flags']
 			blab("Adding build_flags for %s: %s" % (feature, f))
 			new_flags = env.GetProjectOption('build_flags') + [ f ]
 			env.Replace(BUILD_FLAGS=new_flags)
 
->>>>>>> upstream/bugfix-2.0.x
 		if 'extra_scripts' in feat:
 			blab("Running extra_scripts for %s... " % feature)
 			env.SConscript(feat['extra_scripts'], exports="env")
@@ -223,13 +192,8 @@ def apply_features_config():
 			blab("Adding src_filter for %s... " % feature)
 			src_filter = ' '.join(env.GetProjectOption('src_filter'))
 			# first we need to remove the references to the same folder
-<<<<<<< HEAD
-			my_srcs = re.findall( r'[+-](<.*?>)', feat['src_filter'])
-			cur_srcs = re.findall( r'[+-](<.*?>)', src_filter)
-=======
 			my_srcs = re.findall(r'[+-](<.*?>)', feat['src_filter'])
 			cur_srcs = re.findall(r'[+-](<.*?>)', src_filter)
->>>>>>> upstream/bugfix-2.0.x
 			for d in my_srcs:
 				if d in cur_srcs:
 					src_filter = re.sub(r'[+-]' + d, '', src_filter)

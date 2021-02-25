@@ -43,6 +43,10 @@
 //
 // Release PB4 (Y_ENABLE_PIN) from JTAG NRST role
 //
+<<<<<<< HEAD
+=======
+
+>>>>>>> B1-custom-2.0.6
 #define DISABLE_DEBUG
 
 //

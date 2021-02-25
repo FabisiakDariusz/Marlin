@@ -25,7 +25,7 @@
  * Release version. Leave the Marlin version or apply a custom scheme.
  */
 #ifndef SHORT_BUILD_VERSION
-  #define SHORT_BUILD_VERSION "bugfix-2.0.x"
+  #define SHORT_BUILD_VERSION "2.0.6"
 #endif
 
 /**
@@ -42,7 +42,11 @@
  * version was tagged.
  */
 #ifndef STRING_DISTRIBUTION_DATE
+<<<<<<< HEAD
   #define STRING_DISTRIBUTION_DATE "2021-02-19"
+=======
+  #define STRING_DISTRIBUTION_DATE "2021-02-16"
+>>>>>>> B1-custom-2.0.6
 #endif
 
 /**
@@ -73,7 +77,7 @@
  * Define a generic printer name to be output to the LCD after booting Marlin.
  */
 #ifndef MACHINE_NAME
-  #define MACHINE_NAME "3D Printer"
+  #define MACHINE_NAME "BIQU B1 by luznybaleron"
 #endif
 
 /**

@@ -81,20 +81,25 @@ void GcodeSuite::M1001() {
   TERN_(LCD_SET_PROGRESS_MANUALLY, ui.set_progress_done());
 
   // Announce SD file completion
+<<<<<<< HEAD
   {
     PORT_REDIRECT(SERIAL_ALL);
     SERIAL_ECHOLNPGM(STR_FILE_PRINTED);
   }
+=======
+  PORT_REDIRECT(SERIAL_BOTH);
+  SERIAL_ECHOLNPGM(STR_FILE_PRINTED);
+>>>>>>> B1-custom-2.0.6
 
   // Update the status LED color
   #if HAS_LEDS_OFF_FLAG
-    if (long_print) {
+    /*if (long_print) {
       printerEventLEDs.onPrintCompleted();
       TERN_(EXTENSIBLE_UI, ExtUI::onUserConfirmRequired_P(GET_TEXT(MSG_PRINT_DONE)));
       TERN_(HOST_PROMPT_SUPPORT, host_prompt_do(PROMPT_USER_CONTINUE, GET_TEXT(MSG_PRINT_DONE), CONTINUE_STR));
       wait_for_user_response(SEC_TO_MS(TERN(HAS_LCD_MENU, PE_LEDS_COMPLETED_TIME, 30)));
       printerEventLEDs.onResumeAfterWait();
-    }
+    }*/
   #endif
 
   // Inject SD_FINISHED_RELEASECOMMAND, if any

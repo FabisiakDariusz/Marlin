@@ -460,6 +460,10 @@ typedef struct SettingsDataStruct {
     uint8_t ui_language;                                // M414 S
   #endif
 
+  #if ENABLED(BABYSTEP_DISPLAY_TOTAL)
+    int16_t babystep_z_steps;
+  #endif
+
 } SettingsData;
 
 //static_assert(sizeof(SettingsData) <= MARLIN_EEPROM_SIZE, "EEPROM too small to contain SettingsData!");
@@ -1342,6 +1346,10 @@ void MarlinSettings::postprocess() {
     //
     #if CASELIGHT_USES_BRIGHTNESS
       EEPROM_WRITE(caselight.brightness);
+    #endif
+
+    #if ENABLED(BABYSTEP_DISPLAY_TOTAL)
+      EEPROM_WRITE(babystep.axis_total[BS_AXIS_IND(Z_AXIS)]);
     #endif
 
     //
@@ -2242,6 +2250,7 @@ void MarlinSettings::postprocess() {
         EEPROM_READ(password.value);
       #endif
 
+<<<<<<< HEAD:Marlin/src/module/settings.cpp
       //
       // TOUCH_SCREEN_CALIBRATION
       //
@@ -2286,6 +2295,12 @@ void MarlinSettings::postprocess() {
       //
       // Validate Final Size and CRC
       //
+=======
+      #if ENABLED(BABYSTEP_DISPLAY_TOTAL)
+        EEPROM_READ(babystep.axis_total[BS_AXIS_IND(Z_AXIS)]);
+      #endif
+
+>>>>>>> B1-custom-2.0.6:Marlin/src/module/configuration_store.cpp
       eeprom_error = size_error(eeprom_index - (EEPROM_OFFSET));
       if (eeprom_error) {
         DEBUG_ECHO_START();
@@ -2563,6 +2578,9 @@ void MarlinSettings::reset() {
     TERN_(HAS_FILAMENT_RUNOUT_DISTANCE, runout.set_runout_distance(FILAMENT_RUNOUT_DISTANCE_MM));
   #endif
 
+  #if ENABLED(BABYSTEP_DISPLAY_TOTAL)
+    babystep.axis_total[BS_AXIS_IND(Z_AXIS)] = 0;
+  #endif
   //
   // Tool-change Settings
   //
@@ -2635,13 +2653,27 @@ void MarlinSettings::reset() {
   TERN_(HAS_LEVELING, reset_bed_level());
 
   #if HAS_BED_PROBE
+  {
     constexpr float dpo[] = NOZZLE_TO_PROBE_OFFSET;
     static_assert(COUNT(dpo) == 3, "NOZZLE_TO_PROBE_OFFSET must contain offsets for X, Y, and Z.");
     #if HAS_PROBE_XY_OFFSET
+    {
       LOOP_XYZ(a) probe.offset[a] = dpo[a];
+      TERN_(float(NOZZLE_TO_PROBE_OFFSET_X),  probe.offset.x);
+      TERN_(float(NOZZLE_TO_PROBE_OFFSET_Y),  probe.offset.y);
+      TERN_(float(NOZZLE_TO_PROBE_OFFSET_Z),  probe.offset.z);
+    }  
     #else
+<<<<<<< HEAD:Marlin/src/module/settings.cpp
       probe.offset.set(0, 0, dpo[Z_AXIS]);
+=======
+    {
+      probe.offset.x = probe.offset.y = 0;
+      probe.offset.z = dpo[Z_AXIS];
+    }
+>>>>>>> B1-custom-2.0.6:Marlin/src/module/configuration_store.cpp
     #endif
+  }
   #endif
 
   //
@@ -3846,6 +3878,7 @@ void MarlinSettings::reset() {
       );
     #endif
 
+<<<<<<< HEAD:Marlin/src/module/settings.cpp
     #if HAS_ETHERNET
       CONFIG_ECHO_HEADING("Ethernet:");
       if (!forReplay) { CONFIG_ECHO_START(); ETH0_report(); }
@@ -3858,6 +3891,14 @@ void MarlinSettings::reset() {
     #if HAS_MULTI_LANGUAGE
       CONFIG_ECHO_HEADING("UI Language:");
       SERIAL_ECHO_MSG("  M414 S", ui.language);
+=======
+    #if ENABLED(BABYSTEP_DISPLAY_TOTAL)
+      CONFIG_ECHO_HEADING("Babystep total:");
+      CONFIG_ECHO_START();
+      SERIAL_ECHOLNPAIR(
+        "  M290 Z", int(babystep.axis_total[BS_AXIS_IND(Z_AXIS)])
+      );
+>>>>>>> B1-custom-2.0.6:Marlin/src/module/configuration_store.cpp
     #endif
   }
 

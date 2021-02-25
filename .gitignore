@@ -183,6 +183,7 @@ cmake-build-*
 
 # Python
 __pycache__
+<<<<<<< HEAD
 
 # IOLogger logs
 *_log.csv
@@ -190,3 +191,6 @@ __pycache__
 # Simulation / Native
 eeprom.dat
 imgui.ini
+=======
+platformio.ini
+>>>>>>> B1-custom-2.0.6

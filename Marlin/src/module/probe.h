@@ -242,14 +242,10 @@ public:
     static void set_probing_paused(const bool p);
   #endif
 
-<<<<<<< HEAD
-  static bool is_exist();
-=======
   #if ENABLED(PROBE_TARE)
     static void tare_init();
     static bool tare();
   #endif
->>>>>>> upstream/bugfix-2.0.x
 
 private:
   static bool probe_down_to_z(const float z, const feedRate_t fr_mm_s);

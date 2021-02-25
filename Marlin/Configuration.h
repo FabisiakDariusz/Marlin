@@ -511,10 +511,7 @@
 
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
-  // BIQU B1M301 P16.64 I0.92 D74.88 (2021-02-19)
-  #define DEFAULT_Kp 16.64
-  #define DEFAULT_Ki 0.92
-  #define DEFAULT_Kd 74.88
+
                     
   // Ultimaker
   //#define DEFAULT_Kp 22.2
@@ -538,9 +535,10 @@
     #define DEFAULT_Ki_LIST {   1.08,   1.08 }
     #define DEFAULT_Kd_LIST { 114.00, 114.00 }
   #else
-    #define DEFAULT_Kp  22.20
-    #define DEFAULT_Ki   1.08
-    #define DEFAULT_Kd 114.00
+  // BIQU B1M301 P16.64 I0.92 D74.88 (2021-02-19)
+    #define DEFAULT_Kp 16.64
+    #define DEFAULT_Ki 0.92
+    #define DEFAULT_Kd 74.88
   #endif
 #endif // PIDTEMP
 
@@ -659,8 +657,8 @@
 //============================== Endstop Settings ===========================
 //===========================================================================
 
-// @section homing
 
+// @section Hg
 // Specify here all the endstop connectors that are connected to any endstop or probe.
 // Almost all printers will be using one per axis. Probes will use one or more of the
 // extra connectors. Leave undefined any used for non-endstop and non-probe purposes.
@@ -1066,7 +1064,7 @@
 #define XY_PROBE_SPEED (133*60)
 
 // Feedrate (mm/min) for the first approach when double-probing (MULTIPLE_PROBING == 2)
-#define Z_PROBE_SPEED_FAST HOMING_FEEDRATE_Z
+#define Z_PROBE_SPEED_FAST (4*60)
 
 // Feedrate (mm/min) for the "accurate" probe of each point
 #define Z_PROBE_SPEED_SLOW (Z_PROBE_SPEED_FAST / 2)
@@ -1841,7 +1839,7 @@
  *
  * View the current statistics with M78.
  */
-#define PRINTCOUNTER
+//#define PRINTCOUNTER
 #if ENABLED(PRINTCOUNTER)
   #define PRINTCOUNTER_SAVE_INTERVAL 60 // (minutes) EEPROM save interval during print
 #endif
@@ -1874,7 +1872,6 @@
   //#define PASSWORD_AFTER_SD_PRINT_END
   //#define PASSWORD_AFTER_SD_PRINT_ABORT
   //#include "Configuration_Secure.h"       // External file with PASSWORD_DEFAULT_VALUE
-  //#define PRINTCOUNTER
 #endif
 
 /**

@@ -215,21 +215,13 @@ GCC_PATH_CACHE = os.path.join(ENV_BUILD_PATH, ".gcc_path")
 def search_compiler():
 	try:
 		filepath = env.GetProjectOption('custom_gcc')
-<<<<<<< HEAD
-		blab('Getting compiler from env')
-=======
 		blab("Getting compiler from env")
->>>>>>> upstream/bugfix-2.0.x
 		return filepath
 	except:
 		pass
 
 	if os.path.exists(GCC_PATH_CACHE):
-<<<<<<< HEAD
-		blab('Getting g++ path from cache')
-=======
 		blab("Getting g++ path from cache")
->>>>>>> upstream/bugfix-2.0.x
 		with open(GCC_PATH_CACHE, 'r') as f:
 			return f.read()
 
@@ -256,11 +248,7 @@ def search_compiler():
 			filepath = os.path.sep.join([pathdir, filepath])
 			# Cache the g++ path to no search always
 			if os.path.exists(ENV_BUILD_PATH):
-<<<<<<< HEAD
-				blab('Caching g++ for current env')
-=======
 				blab("Caching g++ for current env")
->>>>>>> upstream/bugfix-2.0.x
 				with open(GCC_PATH_CACHE, 'w+') as f:
 					f.write(filepath)
 
@@ -323,8 +311,6 @@ def MarlinFeatureIsEnabled(env, feature):
 				some_on = env.MarlinFeatureIsEnabled(val)
 
 	return some_on
-<<<<<<< HEAD
-=======
 
 #
 # Check for Configfiles in two common incorrect places
@@ -335,7 +321,6 @@ def check_configfile_locations():
 			if os.path.isfile(os.path.join(p, f)):
 				err = 'ERROR: Config files found in directory ' + str(p) + '. Please move them into the Marlin subdirectory.'
 				raise SystemExit(err)
->>>>>>> upstream/bugfix-2.0.x
 
 #
 # Add a method for other PIO scripts to query enabled features
@@ -345,9 +330,6 @@ env.AddMethod(MarlinFeatureIsEnabled)
 #
 # Add dependencies for enabled Marlin features
 #
-<<<<<<< HEAD
-=======
 check_configfile_locations()
->>>>>>> upstream/bugfix-2.0.x
 apply_features_config()
 force_ignore_unused_libs()

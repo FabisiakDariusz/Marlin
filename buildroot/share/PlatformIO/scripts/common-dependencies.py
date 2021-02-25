@@ -15,6 +15,33 @@ try:
 except ImportError:
 	# PIO >= 4.4
 	from platformio.package.meta import PackageSpec as PackageManager
+<<<<<<< HEAD
+=======
+
+PIO_VERSION_MIN = (5, 0, 3)
+try:
+	from platformio import VERSION as PIO_VERSION
+	weights = (1000, 100, 1)
+	version_min = sum([x[0] * float(re.sub(r'[^0-9]', '.', str(x[1]))) for x in zip(weights, PIO_VERSION_MIN)])
+	version_cur = sum([x[0] * float(re.sub(r'[^0-9]', '.', str(x[1]))) for x in zip(weights, PIO_VERSION)])
+	if version_cur < version_min:
+		print()
+		print("**************************************************")
+		print("******      An update to PlatformIO is      ******")
+		print("******  required to build Marlin Firmware.  ******")
+		print("******                                      ******")
+		print("******      Minimum version: ", PIO_VERSION_MIN, "    ******")
+		print("******      Current Version: ", PIO_VERSION, "    ******")
+		print("******                                      ******")
+		print("******   Update PlatformIO and try again.   ******")
+		print("**************************************************")
+		print()
+		exit(1)
+except SystemExit:
+	exit(1)
+except:
+	print("Can't detect PlatformIO Version")
+>>>>>>> upstream/bugfix-2.0.x
 
 Import("env")
 
@@ -39,6 +66,7 @@ def parse_pkg_uri(spec):
 FEATURE_CONFIG = {}
 
 def add_to_feat_cnf(feature, flines):
+<<<<<<< HEAD
 	feat = FEATURE_CONFIG[feature]
 	atoms = re.sub(',\\s*', '\n', flines).strip().split('\n')
 	for dep in atoms:
@@ -49,6 +77,31 @@ def add_to_feat_cnf(feature, flines):
 			feat[name] = rest
 		else:
 			feat['lib_deps'] += [dep]
+=======
+
+	try:
+		feat = FEATURE_CONFIG[feature]
+	except:
+		FEATURE_CONFIG[feature] = {}
+
+	# Get a reference to the FEATURE_CONFIG under construction
+	feat = FEATURE_CONFIG[feature]
+
+	# Split up passed lines on commas or newlines and iterate
+	# Add common options to the features config under construction
+	# For lib_deps replace a previous instance of the same library
+	atoms = re.sub(r',\\s*', '\n', flines).strip().split('\n')
+	for line in atoms:
+		parts = line.split('=')
+		name = parts.pop(0)
+		if name in ['build_flags', 'extra_scripts', 'src_filter', 'lib_ignore']:
+			feat[name] = '='.join(parts)
+		else:
+			for dep in line.split(','):
+				lib_name = re.sub(r'@([~^]|[<>]=?)?[\d.]+', '', dep.strip()).split('=').pop(0)
+				lib_re = re.compile('(?!^' + lib_name + '\\b)')
+				feat['lib_deps'] = list(filter(lib_re.match, feat['lib_deps'])) + [dep]
+>>>>>>> upstream/bugfix-2.0.x
 
 def load_config():
 	config = configparser.ConfigParser()
@@ -102,8 +155,12 @@ def force_ignore_unused_libs():
 	known_libs = get_all_known_libs()
 	diff = (list(set(known_libs) - set(env_libs)))
 	lib_ignore = env.GetProjectOption('lib_ignore') + diff
+<<<<<<< HEAD
 	if verbose:
 		print("Ignore libraries:", lib_ignore)
+=======
+	blab("Ignore libraries: %s" % lib_ignore)
+>>>>>>> upstream/bugfix-2.0.x
 	set_env_field('lib_ignore', lib_ignore)
 
 def apply_features_config():
@@ -113,10 +170,17 @@ def apply_features_config():
 			continue
 
 		feat = FEATURE_CONFIG[feature]
+<<<<<<< HEAD
 
 		if 'lib_deps' in feat and len(feat['lib_deps']):
 			blab("Adding lib_deps for %s... " % feature)
 
+=======
+
+		if 'lib_deps' in feat and len(feat['lib_deps']):
+			blab("Adding lib_deps for %s... " % feature)
+
+>>>>>>> upstream/bugfix-2.0.x
 			# feat to add
 			deps_to_add = {}
 			for dep in feat['lib_deps']:
@@ -142,6 +206,15 @@ def apply_features_config():
 				# Only add the missing dependencies
 				set_env_field('lib_deps', deps + list(deps_to_add.values()))
 
+<<<<<<< HEAD
+=======
+		if 'build_flags' in feat:
+			f = feat['build_flags']
+			blab("Adding build_flags for %s: %s" % (feature, f))
+			new_flags = env.GetProjectOption('build_flags') + [ f ]
+			env.Replace(BUILD_FLAGS=new_flags)
+
+>>>>>>> upstream/bugfix-2.0.x
 		if 'extra_scripts' in feat:
 			blab("Running extra_scripts for %s... " % feature)
 			env.SConscript(feat['extra_scripts'], exports="env")
@@ -150,8 +223,13 @@ def apply_features_config():
 			blab("Adding src_filter for %s... " % feature)
 			src_filter = ' '.join(env.GetProjectOption('src_filter'))
 			# first we need to remove the references to the same folder
+<<<<<<< HEAD
 			my_srcs = re.findall( r'[+-](<.*?>)', feat['src_filter'])
 			cur_srcs = re.findall( r'[+-](<.*?>)', src_filter)
+=======
+			my_srcs = re.findall(r'[+-](<.*?>)', feat['src_filter'])
+			cur_srcs = re.findall(r'[+-](<.*?>)', src_filter)
+>>>>>>> upstream/bugfix-2.0.x
 			for d in my_srcs:
 				if d in cur_srcs:
 					src_filter = re.sub(r'[+-]' + d, '', src_filter)
@@ -173,13 +251,21 @@ GCC_PATH_CACHE = os.path.join(ENV_BUILD_PATH, ".gcc_path")
 def search_compiler():
 	try:
 		filepath = env.GetProjectOption('custom_gcc')
+<<<<<<< HEAD
 		blab('Getting compiler from env')
+=======
+		blab("Getting compiler from env")
+>>>>>>> upstream/bugfix-2.0.x
 		return filepath
 	except:
 		pass
 
 	if os.path.exists(GCC_PATH_CACHE):
+<<<<<<< HEAD
 		blab('Getting g++ path from cache')
+=======
+		blab("Getting g++ path from cache")
+>>>>>>> upstream/bugfix-2.0.x
 		with open(GCC_PATH_CACHE, 'r') as f:
 			return f.read()
 
@@ -202,10 +288,15 @@ def search_compiler():
 		for filepath in os.listdir(pathdir):
 			if not filepath.endswith(gcc):
 				continue
-
+			# Use entire path to not rely on env PATH
+			filepath = os.path.sep.join([pathdir, filepath])
 			# Cache the g++ path to no search always
 			if os.path.exists(ENV_BUILD_PATH):
+<<<<<<< HEAD
 				blab('Caching g++ for current env')
+=======
+				blab("Caching g++ for current env")
+>>>>>>> upstream/bugfix-2.0.x
 				with open(GCC_PATH_CACHE, 'w+') as f:
 					f.write(filepath)
 
@@ -227,7 +318,7 @@ def load_marlin_features():
 	build_flags = env.ParseFlagsExtended(build_flags)
 
 	cxx = search_compiler()
-	cmd = [cxx]
+	cmd = ['"' + cxx + '"']
 
 	# Build flags from board.json
 	#if 'BOARD' in env:
@@ -238,7 +329,7 @@ def load_marlin_features():
 		else:
 			cmd += ['-D' + s]
 
-	cmd += ['-w -dM -E -x c++ buildroot/share/PlatformIO/scripts/common-dependencies.h']
+	cmd += ['-D__MARLIN_DEPS__ -w -dM -E -x c++ buildroot/share/PlatformIO/scripts/common-dependencies.h']
 	cmd = ' '.join(cmd)
 	blab(cmd)
 	define_list = subprocess.check_output(cmd, shell=True).splitlines()
@@ -268,6 +359,19 @@ def MarlinFeatureIsEnabled(env, feature):
 				some_on = env.MarlinFeatureIsEnabled(val)
 
 	return some_on
+<<<<<<< HEAD
+=======
+
+#
+# Check for Configfiles in two common incorrect places
+#
+def check_configfile_locations():
+	for p in [ env['PROJECT_DIR'], os.path.join(env['PROJECT_DIR'], "config") ]:
+		for f in [ "Configuration.h", "Configuration_adv.h" ]:
+			if os.path.isfile(os.path.join(p, f)):
+				err = 'ERROR: Config files found in directory ' + str(p) + '. Please move them into the Marlin subdirectory.'
+				raise SystemExit(err)
+>>>>>>> upstream/bugfix-2.0.x
 
 #
 # Add a method for other PIO scripts to query enabled features
@@ -277,5 +381,9 @@ env.AddMethod(MarlinFeatureIsEnabled)
 #
 # Add dependencies for enabled Marlin features
 #
+<<<<<<< HEAD
+=======
+check_configfile_locations()
+>>>>>>> upstream/bugfix-2.0.x
 apply_features_config()
 force_ignore_unused_libs()

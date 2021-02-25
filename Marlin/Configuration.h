@@ -123,7 +123,7 @@
  *
  * :[2400, 9600, 19200, 38400, 57600, 115200, 250000, 500000, 1000000]
  */
-#define BAUDRATE 115200
+#define BAUDRATE 250000
 
 // Enable the Bluetooth serial interface on AT90USB devices
 //#define BLUETOOTH
@@ -134,7 +134,7 @@
 #endif
 
 // Name displayed in the LCD "Ready" message and Info menu
-#define CUSTOM_MACHINE_NAME "BIQU B1 - PULS 2"
+#define CUSTOM_MACHINE_NAME "BIQU B1"
 
 // Printer's unique ID, used by some programs to differentiate between machines.
 // Choose your own or use a service like https://www.uuidgenerator.net/version4
@@ -502,11 +502,11 @@
 
   // If you are using a pre-configured hotend then you can use one of the value sets by uncommenting it
 
-  // BIQU B1
-  #define DEFAULT_Kp 23.34
-  #define DEFAULT_Ki 1.85
-  #define DEFAULT_Kd 73.55
-
+  // BIQU B1M301 P16.64 I0.92 D74.88 (2021-02-19)
+  #define DEFAULT_Kp 16.64
+  #define DEFAULT_Ki 0.92
+  #define DEFAULT_Kd 74.88
+                    
   // Ultimaker
   //#define DEFAULT_Kp 22.2
   //#define DEFAULT_Ki 1.08
@@ -557,7 +557,7 @@
   //#define MIN_BED_POWER 0
   //#define PID_BED_DEBUG // Sends debug data to the serial port.
 
-  // BIQU B1
+  // BIQU B1  M304 P100.65 I14.82 D455.69 (2021-02-19) the same like DEFAULT from BTT Firmware
   #define DEFAULT_bedKp 100.65
   #define DEFAULT_bedKi 14.82
   #define DEFAULT_bedKd 455.69
@@ -712,7 +712,7 @@
 //#define Z2_DRIVER_TYPE A4988
 //#define Z3_DRIVER_TYPE A4988
 //#define Z4_DRIVER_TYPE A4988
-#define E0_DRIVER_TYPE TMC2208  // TMC2225
+#define E0_DRIVER_TYPE TMC2209  // TMC2225
 //#define E1_DRIVER_TYPE A4988
 //#define E2_DRIVER_TYPE A4988
 //#define E3_DRIVER_TYPE A4988
@@ -767,7 +767,7 @@
  * Override with M92
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
-#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 96 }
+#define DEFAULT_AXIS_STEPS_PER_UNIT   { 80, 80, 400, 415 }
 
 /**
  * Default Max Feed Rate (mm/s)
@@ -787,7 +787,7 @@
  * Override with M201
  *                                      X, Y, Z, E0 [, E1[, E2...]]
  */
-#define DEFAULT_MAX_ACCELERATION      { 1000, 1000, 100, 5000 }
+#define DEFAULT_MAX_ACCELERATION      { 1200, 1200, 100, 5000 }
 
 //#define LIMITED_MAX_ACCEL_EDITING     // Limit edit via M201 or LCD to DEFAULT_MAX_ACCELERATION * 2
 #if ENABLED(LIMITED_MAX_ACCEL_EDITING)
@@ -802,9 +802,9 @@
  *   M204 R    Retract Acceleration
  *   M204 T    Travel Acceleration
  */
-#define DEFAULT_ACCELERATION          500    // X, Y, Z and E acceleration for printing moves
-#define DEFAULT_RETRACT_ACCELERATION  500    // E acceleration for retracts
-#define DEFAULT_TRAVEL_ACCELERATION   500    // X, Y, Z acceleration for travel (non printing) moves
+#define DEFAULT_ACCELERATION          600    // X, Y, Z and E acceleration for printing moves
+#define DEFAULT_RETRACT_ACCELERATION  600    // E acceleration for retracts
+#define DEFAULT_TRAVEL_ACCELERATION   600    // X, Y, Z acceleration for travel (non printing) moves
 
 /**
  * Default Jerk limits (mm/s)
@@ -828,7 +828,7 @@
   #endif
 #endif
 
-#define DEFAULT_EJERK    4.0  // May be used by Linear Advance
+#define DEFAULT_EJERK    3.8  // May be used by Linear Advance
 
 /**
  * Junction Deviation Factor
@@ -980,7 +980,7 @@
 
 #define NOZZLE_TO_PROBE_OFFSET_X  26.0
 #define NOZZLE_TO_PROBE_OFFSET_Y -40.0
-#define NOZZLE_TO_PROBE_OFFSET_Z  -3.4
+#define NOZZLE_TO_PROBE_OFFSET_Z  -3.49
 
 
 //
@@ -1072,7 +1072,7 @@
 #define Z_PROBE_OFFSET_RANGE_MAX 20
 
 // Enable the M48 repeatability test to test probe accuracy
-//#define Z_MIN_PROBE_REPEATABILITY_TEST
+#define Z_MIN_PROBE_REPEATABILITY_TEST
 
 // Before deploy/stow pause for user confirmation
 //#define PAUSE_BEFORE_DEPLOY_STOW
@@ -1356,7 +1356,7 @@
 
   
                                    
-  #define GRID_MAX_POINTS_X 7       // Don't use more than 15 points per axis, implementation limited.
+  #define GRID_MAX_POINTS_X 8       // Don't use more than 15 points per axis, implementation limited.
   #define GRID_MAX_POINTS_Y GRID_MAX_POINTS_X
 
   #define UBL_MESH_EDIT_MOVES_Z     // Sophisticated users prefer no movement of nozzle
@@ -2271,7 +2271,6 @@
 // See Configuration_adv.h for all configuration options.
 //
 //#define TOUCH_UI_FTDI_EVE
-
 //
 // Touch-screen LCD for Anycubic printers
 //
